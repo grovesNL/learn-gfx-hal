@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>learn-gfx-hal</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="00_requirements.html"><strong aria-hidden="true">1.</strong> Requirements</a></li><li><a href="01_opening_a_window.html"><strong aria-hidden="true">2.</strong> Opening A Window</a></li><li><a href="02_drawing_a_triangle.html"><strong aria-hidden="true">3.</strong> Drawing A Triangle</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">learn-gfx-hal</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#requirements" id="requirements"><h1>Requirements</h1></a>
+<p>I assume that you have basic familiarity with Rust. So go read <a href="https://doc.rust-lang.org/book/">The Rust
+Book</a> if you haven't ever done that.</p>
+<p>We will also be touching upon elements of <code>unsafe</code> Rust, and so you should also
+read <a href="https://doc.rust-lang.org/nomicon/">The Rustonomicon</a> if you have not.
+Actually, that's a mild lie, most of <code>gfx-hal-0.1.0</code> doesn't define any of its
+safety limits anyway (not beyond &quot;whatever Vulkan say is okay&quot;), so it's all a
+shot in the dark no matter what you do. Even if you're using a backend that
+isn't Vulkan.</p>
+<p>I don't assume you have any prior graphics programming skills. I sure don't have
+much myself. I drew a quad once in OpenGL, but that's it. We'll be learning and
+reviewing all that stuff together.</p>
+<a class="header" href="#opening-a-window" id="opening-a-window"><h1>Opening A Window</h1></a>
+<p>Before we can draw anything, we need a place to draw it. That means we need to
+open a window.</p>
+<a class="header" href="#initializing-a-window" id="initializing-a-window"><h2>Initializing A Window</h2></a>
+<p>To open a window in Rust, you want to use the <a href="https://docs.rs/winit/">winit</a>
+crate to get the best cross-platform coverage available. At the time of writing,
+the latest version is 0.18. Set up a project for this tutorial however you like
+and just add <code>winit</code> to your <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[dependencies]
+winit = &quot;0.18&quot;
+</code></pre>
+<p>The <code>winit</code> crate is what you'd call &quot;mostly stable&quot;. There are small breaking changes
+with new versions, but it's usually plain enough to see what the new types or methods
+that you need to move to are.</p>
+<p>The <a href="https://docs.rs/winit/0.18.0/winit/#building-a-window">crate documentation</a>
+goes over the basic steps of building a window:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let events_loop = EventsLoop::new();
+let window = WindowBuilder::new()
+  .with_title(&quot;Example&quot;)
+  .build(&amp;events_loop)
+  .expect(&quot;Could not create a window!&quot;);
+#}</code></pre></pre>
+<p>Of course, the
+<a href="https://docs.rs/winit/0.18.0/winit/struct.WindowBuilder.html">WindowBuilder</a>
+type has many other methods you might want to use, so be sure to check all
+that out.</p>
+<a class="header" href="#responding-to-events" id="responding-to-events"><h2>Responding To Events</h2></a>
+<p>Once the window is open the user will try to interact with the window. They'll
+move the mouse, type keys, click the <code>x</code> in the corner to close it, things like
+that. You handle all of this with
+<a href="https://docs.rs/winit/0.18.0/winit/struct.EventsLoop.html">EventsLoop</a>.
+You can call
+<a href="https://docs.rs/winit/0.18.0/winit/struct.EventsLoop.html#method.run_forever">run_forever</a>
+with a callback, or
+<a href="https://docs.rs/winit/0.18.0/winit/struct.EventsLoop.html#method.poll_events">poll_events</a>
+with a callback. In both cases, your callback gets an
+<a href="https://docs.rs/winit/0.18.0/winit/enum.Event.html">Event</a>, which is an enum.
+Naturally we have to match on that and find the cases we care about. We can discard the
+other types. You'll actually get a whole lot of events through <code>winit</code>,
+so it's definitely good to ignore most of them if you only care about one or two
+event types.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let mut running = true;
+while running {
+  events_loop.poll_events(|event| match event {
+    Event::WindowEvent {
+      event: WindowEvent::CloseRequested,
+      ..
+    } =&gt; running = false,
+    _ =&gt; (),
+  });
+}
+#}</code></pre></pre>
+<a class="header" href="#pack-it-together" id="pack-it-together"><h2>Pack It Together</h2></a>
+<p>We'll have a lot of things floating around as we go along, so we'll want to pack
+things together when we can. Winit doesn't care what graphical libs you're using
+to draw within the frame, so we can keep just the windowing stuff in its own
+struct, apart from any gfx-hal things.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Debug)]
+pub struct WinitState {
+  pub events_loop: EventsLoop,
+  pub window: Window,
+}
+#}</code></pre></pre>
+<p>Of course, we want to streamline those building steps:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl WinitState {
+  /// Constructs a new `EventsLoop` and `Window` pair.
+  ///
+  /// The specified title and size are used, other elements are default.
+  /// ## Failure
+  /// It's possible for the window creation to fail. This is unlikely.
+  pub fn new&lt;T: Into&lt;String&gt;&gt;(title: T, size: LogicalSize) -&gt; Result&lt;Self, CreationError&gt; {
+    let events_loop = EventsLoop::new();
+    let output = WindowBuilder::new().with_title(title).with_dimensions(size).build(&amp;events_loop);
+    output.map(|window| Self { events_loop, window })
+  }
+}
+#}</code></pre></pre>
+<p>And we probably want to go one step farther for our examples and just give a
+<code>Default</code> impl that calls <code>new</code> with some default values and then panics if
+there's a <code>CreationError</code>.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub const WINDOW_NAME: &amp;str = &quot;Hello Winit&quot;;
+
+impl Default for WinitState {
+  /// Makes an 800x600 window with the `WINDOW_NAME` value as the title.
+  /// ## Panics
+  /// If a `CreationError` occurs.
+  fn default() -&gt; Self {
+    Self::new(WINDOW_NAME, LogicalSize { width: 800.0, height: 600.0 }).expect(&quot;Could not create a window!&quot;)
+  }
+}
+#}</code></pre></pre>
+<a class="header" href="#running-the-program" id="running-the-program"><h2>Running The Program</h2></a>
+<p>So far we only have a very tiny main function to look at:</p>
+<pre><pre class="playpen"><code class="language-rust">fn main() {
+  let mut winit_state = WinitState::default();
+  let mut running = true;
+  while running {
+    winit_state.events_loop.poll_events(|event| match event {
+      Event::WindowEvent {
+        event: WindowEvent::CloseRequested,
+        ..
+      } =&gt; running = false,
+      _ =&gt; (),
+    });
+  }
+}
+</code></pre></pre>
+<p>If you run this you get an all white window. Actually, without anything being
+drawn to the window, it might instead show all black, or even just garbage pixel
+data. It depends on your windowing system.</p>
+<p>Also, normally an application would use &quot;Vertical Synchronization&quot; (Vsync) to
+slow down the main loop. Without any drawing code we can't use vsync, so the
+loop will spin around and use 100% of the CPU.</p>
+<p>Both things are not good, but this is just a stepping stone and we learn
+to draw stuff in the next lesson, so it's fine.</p>
+<p>All of the code discussed here is available within the <code>hello_winit</code> example.</p>
+<a class="header" href="#incomplete" id="incomplete"><h1>INCOMPLETE</h1></a>
+<a class="header" href="#todo" id="todo"><h1>TODO</h1></a>
+<a class="header" href="#work-in-progress" id="work-in-progress"><h1>WORK IN PROGRESS</h1></a>
+<a class="header" href="#drawing-a-triangle" id="drawing-a-triangle"><h1>Drawing A Triangle</h1></a>
+<p>This part will be the most difficult part out of all of them.</p>
+<p>Unfortunately, for you, and I, and for everyone else, <code>gfx-hal</code> has a rather
+intense upfront word cost. Adding more as you go isn't pricey, but that first
+triangle covers a whole lot of ground at once. This is a land of maximum
+control, and unfortunately we can't just say &quot;gimme a good default setup and
+I'll change the settings later&quot;. By the end of this lesson we'll have expanded
+our code from ~40 lines to ~700 lines.</p>
+<a class="header" href="#adding-in-gfx-hal-and-a-backend" id="adding-in-gfx-hal-and-a-backend"><h2>Adding in <code>gfx-hal</code> and a backend</h2></a>
+<p>First, we have to add the <code>gfx-hal</code> crate to our <code>Cargo.toml</code> file. We also need
+to pick a backend crate. Remember that the &quot;hal&quot; in <code>gfx-hal</code> is for &quot;Hardware
+Abstraction Layer&quot;. So <code>gfx-hal</code> just provides the general types and operations,
+then each backend actually implements the details according to the hardware API
+it's abstracting over.</p>
+<p>Since we want it to be something you can pick per-compile, we're going to use a
+big pile of features and optional dependencies:</p>
+<pre><code class="language-toml">[features]
+default = []
+metal = [&quot;gfx-backend-metal&quot;]
+dx12 = [&quot;gfx-backend-dx12&quot;]
+vulkan = [&quot;gfx-backend-vulkan&quot;]
+
+[dependencies]
+winit = &quot;0.18&quot;
+gfx-hal = &quot;0.1&quot;
+
+[dependencies.gfx-backend-vulkan]
+version = &quot;0.1&quot;
+optional = true
+
+[target.'cfg(target_os = &quot;macos&quot;)'.dependencies.gfx-backend-metal]
+version = &quot;0.1&quot;
+optional = true
+
+[target.'cfg(windows)'.dependencies.gfx-backend-dx12]
+version = &quot;0.1&quot;
+optional = true
+</code></pre>
+<p>If you want RLS to play nice with the various optional features you must tell it
+which one to use for its compilations. If you're using VS Code with the RLS
+plugin, instead of messing up your <code>Cargo.toml</code> by specifying a default feature
+you can instead make a <code>.vscode/settings.json</code> file in your project folder and
+then place a setting for the feature you want it to use for RLS runs. Something
+like this:</p>
+<pre><code class="language-json">{
+  &quot;rust.features&quot;: [
+    &quot;dx12&quot;
+  ]
+}
+</code></pre>
+<p>If you're using RLS with some editor besides VS Code I'm afraid I don't know the
+details of how you tell it to use a particular feature, but you probably can.
+Consult your plugin docs, and such.</p>
+<p>Over inside our main file we put some conditional stuff at the top:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[cfg(feature = &quot;dx12&quot;)]
+extern crate gfx_backend_dx12 as back;
+#[cfg(feature = &quot;metal&quot;)]
+extern crate gfx_backend_metal as back;
+#[cfg(feature = &quot;vulkan&quot;)]
+extern crate gfx_backend_vulkan as back;
+#}</code></pre></pre>
+<p>Yes, in the 2018 edition it's not <em>strictly necessary</em> to have <code>extern crate</code>
+any more, but this way we can alias whichever backend we pick to just be <code>back</code>.</p>
+<p>Finally, before we go on, I'll mention that there <em>are</em> other backend options
+that we haven't considered:</p>
+<ul>
+<li><a href="https://crates.io/crates/gfx-backend-empty">gfx-backend-empty</a> does nothing
+but provide the required implementations as empty structs and do-nothing
+methods and so on. It's mostly used in the rustdoc examples for <code>gfx-hal</code>, and
+you might also use this with RLS or something, but you can't actually draw a
+picture or compute anything with it.</li>
+<li><a href="https://crates.io/crates/gfx-backend-gl">gfx-backend-gl</a> lets you target
+OpenGL 2.1+ and OpenGL ES2+. You'd probably use this if you wanted to run in a
+webpage, or perhaps on a Raspberry Pi (which has OpenGL ES2 drivers, but not
+Vulkan), or something like that where you couldn't pick one of the main
+options. Unfortunately, the GL backend is actually a little busted at the
+moment. The biggest snag is that webpages and desktop apps have rather
+different control flow, so it's hard to come up with a unified API. Work is
+being done, and hopefully soon I'll be able to recommend the GL backend.</li>
+</ul>
+<a class="header" href="#allow-for-logging" id="allow-for-logging"><h2>Allow For Logging</h2></a>
+<p>Since we're already mucking about with extra dependencies and stuff we'll also
+take the time to add logging ability to our program.</p>
+<p>In Rust you use the <a href="https://docs.rs/log">log</a> crate as the generic logging
+facade. It provides macros for each log level and you call them just like you'd
+call <code>println!</code>. Then a particular logging backend (some other crate) picks up
+those logging calls and does the actual logging into a file or over the network
+or however. The simplest logging backend to use is probably
+<a href="https://docs.rs/env_logger">env_logger</a> since it just spits things to <code>stdout</code>
+and <code>stderr</code> instead of needing to setup log files. That's fine for a tutorial,
+so we'll do that. We just add a bit more to our <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[dependencies]
+log = &quot;0.4.0&quot;
+env_logger = &quot;0.5.12&quot;
+winit = &quot;0.18&quot;
+gfx-hal = &quot;0.1&quot;
+</code></pre>
+<p>And then we turn on the <code>env_logger</code> in main before we do anything else:</p>
+<pre><pre class="playpen"><code class="language-rust">fn main() {
+  env_logger::init();
+  // ...
+</code></pre></pre>
+<p>And we'll see anything that someone wanted to log.</p>
+<a class="header" href="#todo-kill-all-the-stuff-past-here" id="todo-kill-all-the-stuff-past-here"><h1>TODO: kill all the stuff past here</h1></a>
+<a class="header" href="#create-an-instance" id="create-an-instance"><h2>Create an Instance</h2></a>
+<p>With our dependencies all set, the very first thing we do is create an
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/trait.Instance.html">Instance</a>. This does
+whatever minimal things are required to activate your backend API. It's quite
+simple. Every backend provides a type called <code>Instance</code> that implements the
+<code>Instance</code> trait, and also they have a method called <code>create</code> which you pass a
+<code>&amp;str</code> (your instance name) and <code>u32</code> (your version). The <code>create</code> method
+<em>isn't</em> part of the Instance trait itself (because of that evil GL backend!),
+though hopefully in a future version that can get squared away. We're working
+with a 0.1 library after all.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+let instance = back::Instance::create(WINDOW_NAME, 1);
+#}</code></pre></pre>
+<p>Creating the instance does the <em>minimal</em> setup to get the backend started, but
+there's a whole lot more to go.</p>
+<a class="header" href="#create-a-surface" id="create-a-surface"><h2>Create a Surface</h2></a>
+<p>Once our Instance is started, we want to make a
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/window/trait.Surface.html">Surface</a>. This
+is the part where <code>winit</code> and <code>gfx-hal</code> touch each other just enough for them to
+communicate.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+  let surface = instance.create_surface(&amp;winit_state.window);
+#}</code></pre></pre>
+<p>The <code>create_surface</code> call is another of those methods that's part of the
+Instance <em>types</em> that each backend just happens to agree to have, rather than
+being on the Instance <em>trait</em> itself. You just pass in a <code>&amp;Window</code> and it does
+the right thing.</p>
+<a class="header" href="#create-an-adapter" id="create-an-adapter"><h2>Create an Adapter</h2></a>
+<p>Next we need an
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/adapter/struct.Adapter.html">Adapter</a>,
+which represents the graphics card you'll be using. A given Instance might have
+more than one available, so we call
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/trait.Instance.html#tymethod.enumerate_adapters">enumerate_adapters</a>
+on our Instance to get the list of what's available. How do we decide what to
+use? Well, you might come up with any criteria you like. The biggest thing you
+probably care about is if the Adapter can do graphics work and/or computation
+work. For now we just want one that can do graphics work.</p>
+<p>Each Adapter has a <code>Vec&lt;B::QueueFamily&gt;</code>, and a
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/queue/family/trait.QueueFamily.html">QueueFamily</a>
+has methods to check if that QueueFamily supports graphics, compute, and/or
+transfer. If a QueueFamily supports graphics or compute it will always also
+support transfer (otherwise you wouldn't be able to send it things to draw and
+compute), but some QueueFamily could theoretically support <em>just</em> transfer and
+nothing else. Also, each QueueFamily has a maximum number of queues that's
+available, and we obviously need to have more than 0 queues available for it to
+be acceptable. Finally, we obviously need to make sure that our Surface supports
+the QueueFamily we're selecting.</p>
+<p>So we have a <code>Vec&lt;Adapter&lt;Self::Backend&gt;&gt;</code> and each of those holds a
+<code>Vec&lt;B::QueueFamily&gt;</code>, sounds like it's time for some Iterator magic.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+  let adapter = instance
+    .enumerate_adapters()
+    .into_iter()
+    .filter(|a| {
+      a.queue_families
+        .iter()
+        .find(|qf| qf.supports_graphics() &amp;&amp; qf.max_queues() &gt; 0 &amp;&amp; surface.supports_queue_family(qf))
+        .is_some()
+    })
+    .next()
+    .expect(&quot;Couldn't find a graphical Adapter!&quot;);
+#}</code></pre></pre>
+<a class="header" href="#open-up-a-device" id="open-up-a-device"><h2>Open up a Device</h2></a>
+<p>Okay so once we have an Adapter selected, we have to actually call
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/adapter/trait.PhysicalDevice.html#tymethod.open">open</a>
+on the associated PhysicalDevice to start using it. Think of this as the
+difference between knowing the IP address you want to connect to and actually
+opening the TCP socket that goes there.</p>
+<p>Look, they even have a sample call to make. We need to specify a reference to a
+slice of QueueFamily and QueuePriority tuple pairs. Well we know how to get a
+QueueFamily we want, we just did that. A
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/adapter/type.QueuePriority.html">QueuePriority</a>
+is apparently just a 0.0 to 1.0 float for how high of priority we want. They use
+1.0 in their example, so that seems fine to me.</p>
+<p>Calling <code>open</code> gives us a Result, but we don't really know what to do if there's
+a failure, so we'll just <code>expect</code> on that with a message like we have with other
+things so far. This gives us a
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/struct.Gpu.html">Gpu</a>, which just bundles
+up a Device and some Queues. The Queues value lets us call
+<a href="https://docs.rs/gfx-hal/0.1.0/gfx_hal/queue/family/struct.Queues.html#method.take">take</a>
+to try and get out a particular QueueGroup by a specified id value. A QueueGroup
+is just a vector of CommandQueue values with some metadata. We call <code>take</code> with
+the id value of the QueueFamily we've been working with and hopefully get a
+QueueGroup out. There's technically another Option layer we have to <code>expect</code>
+away, but we're used to that by now I think. Once we have a QueueGroup, we can
+get that vector of CommandQueue values and call it a day. Doesn't hurt much to
+throw in a <code>debug_assert!</code> that we've really got at least one <code>CommandQueue</code>
+available. We always <em>should</em>, because of the <code>filter</code> on the queue_families
+that we did, but re-checking things you think are probably already true is the
+whole point of a debug_assert after all.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+  let (device, command_queues) = {
+    let queue_family = adapter
+      .queue_families
+      .iter()
+      .find(|qf| qf.supports_graphics() &amp;&amp; qf.max_queues() &gt; 0 &amp;&amp; surface.supports_queue_family(qf))
+      .expect(&quot;Couldn't find a QueueFamily with graphics!&quot;);
+    let Gpu { device, mut queues } = unsafe {
+      adapter
+        .physical_device
+        .open(&amp;[(&amp;queue_family, &amp;[1.0; 1])])
+        .expect(&quot;Couldn't open the PhysicalDevice!&quot;)
+    };
+    let queue_group = queues
+      .take::&lt;Graphics&gt;(queue_family.id())
+      .expect(&quot;Couldn't take ownership of the QueueGroup!&quot;);
+    debug_assert!(queue_group.queues.len() &gt; 0);
+    (device, queue_group.queues)
+  };
+#}</code></pre></pre>
+<a class="header" href="#create-a-swapchain" id="create-a-swapchain"><h2>Create a SwapChain</h2></a>
+<p>TODO!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
